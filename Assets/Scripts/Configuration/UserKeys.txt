@@ -1,0 +1,5 @@
+{
+	"app_id": "c7b9e60c",
+	"app_key": "7e7202aae3e66fc79abb2f4c65c3713b",
+	"url_decryption": "7bd470ade83e4f76"
+}

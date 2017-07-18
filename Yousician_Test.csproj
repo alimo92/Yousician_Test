@@ -78,9 +78,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\JSON\JSONObject.cs" />
+    <Compile Include="Assets\JSON\JSONTemplates.cs" />
+    <Compile Include="Assets\JSON\VectorTemplates.cs" />
     <Compile Include="Assets\Scripts\Entities\Program.cs" />
+    <Compile Include="Assets\Scripts\Networking\ImageUrlBuilder.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkingProgram.cs" />
+    <Compile Include="Assets\Scripts\Networking\UrlBuilder.cs" />
+    <Compile Include="Assets\Scripts\Networking\UrlItem.cs" />
     <Compile Include="Assets\Scripts\Parsers\ProgramParser.cs" />
     <Compile Include="Assets\Scripts\Services\ProgramService.cs" />
+    <Compile Include="Assets\Scripts\ThreadJobs\ProgramJob.cs" />
+    <Compile Include="Assets\Scripts\ThreadJobs\ThreadedJob.cs" />
+    <Compile Include="Assets\Scripts\Util\Tools.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\JSON\readme.txt" />
+    <None Include="Assets\Scripts\Configuration\UserKeys.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
