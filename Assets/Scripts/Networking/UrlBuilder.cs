@@ -43,7 +43,7 @@ public class UrlBuilder  {
 
     //Add an UrlItem to a list of urlitems
     //UrlItem consists of two strings (UrlItemType and UrlItemValue) 
-    private void AddUrlItemToList(List<UrlItem> list_url_item, string urlitemtype, string urlitemvalue)
+    public void AddUrlItemToList(List<UrlItem> list_url_item, string urlitemtype, string urlitemvalue)
     {
         UrlItem urltem = new UrlItem(urlitemtype, urlitemvalue);
         list_url_item.Add(urltem);
@@ -52,7 +52,7 @@ public class UrlBuilder  {
 
     //Remove an UrlItem from a list of urlitems
     //Checks if an item with a given urlitemtype and removes from the the list if it exists
-    private void RemoveUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype)
+    public void RemoveUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype)
     {
         for(int i=0; i< list_url_item.Count; i++)
         {
