@@ -11,7 +11,8 @@ public class DescriptionParser {
         tool = new Tools();
     }
 
-
+    //Returns a JSONObject based on a list of Description objects
+    //the JSONObject can have multiple fields, one for each available language
     public JSONObject GetJson(List<Description> list_description)
     {
         JSONObject json = new JSONObject();
@@ -24,7 +25,8 @@ public class DescriptionParser {
         return json;
     }
 
-
+    //Returns a list of Title based on a JSONObject
+    //Each field represents a description object in the list
     public List<Description> GetListObject(JSONObject json)
     {
         List<Description> list_description = new List<Description>();

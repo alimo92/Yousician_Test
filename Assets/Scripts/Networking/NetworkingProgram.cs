@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class NetworkingProgram : MonoBehaviour {
 
@@ -67,24 +68,36 @@ public class NetworkingProgram : MonoBehaviour {
         if (Request.error == null)
         {
             // Show results as text
-            Debug.Log(Request.text);
 
 
             DescriptionParser descriptionparser = new DescriptionParser();
             PublicationEventParser publicationeventparser = new PublicationEventParser();
+            ProgramParser programparser = new ProgramParser();
+            TitleParser titleparser = new TitleParser();
+
 
             JSONObject result = new JSONObject(Request.text);
             JSONObject data = result.GetField("data");
-            JSONObject Program = data[24];
+            JSONObject Program = data[2];
             JSONObject Description = Program.GetField("description");
             JSONObject publicationEvents = Program.GetField("publicationEvent");
+            JSONObject Title = Program.GetField("title");
 
 
             List<Description> list_description = descriptionparser.GetListObject(Description);
-            List<PublicationEvent> list_publicationevent = publicationeventparser.getListObject(publicationEvents);
+            List<PublicationEvent> list_publicationevent = publicationeventparser.GetListObject(publicationEvents);
+            List<Program> list_program = programparser.GetListObject(data);
+            List<Title> list_title = titleparser.GetListObject(Title);
 
 
-            Debug.Log(publicationeventparser.GetJson(list_publicationevent));
+            Debug.Log(titleparser.GetJson(list_title));
+
+            Program program = programparser.GetObject(data[10]);
+
+            string path = @"D:\programs.txt";
+            string file_content = programparser.GetJson(list_program).Print();
+            //string file_content = data.Print();
+            File.WriteAllText(path, file_content);
 
 
 

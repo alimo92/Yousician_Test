@@ -7,12 +7,15 @@ public class PublicationEventParser  {
 
     private Tools tool;
 
+
+
     public PublicationEventParser()
     {
         tool = new Tools();
     }
 
 
+    //Retruns a JSONObject of the PublicationEvent Object
     public JSONObject GetJson(PublicationEvent publicationevent)
     {
         JSONObject json = new JSONObject();
@@ -29,12 +32,23 @@ public class PublicationEventParser  {
     }
 
 
+
+    //Returns a PublicationEvent Object based on a JSONObject
     public PublicationEvent GetObject(JSONObject json)
     {
         string temp_date;
         PublicationEvent publicationevent = new PublicationEvent();
 
-        publicationevent.PublicationEventDuration = tool.RemoveFirstLastCharacter(json.GetField("duration").Print());
+        if (json.HasField("duration"))
+        {
+            publicationevent.PublicationEventDuration = tool.RemoveFirstLastCharacter(json.GetField("duration").Print());
+        }
+        else if (json.HasField("media"))
+        {
+            publicationevent.PublicationEventDuration = tool.RemoveFirstLastCharacter(json.GetField("media").GetField("duration").Print());
+        }
+
+
         publicationevent.PublicationEventId  = tool.RemoveFirstLastCharacter(json.GetField("id").Print());
         publicationevent.PublicationEventRegion = tool.RemoveFirstLastCharacter(json.GetField("region").Print());
         publicationevent.PublicationEventTemporalStatus = tool.RemoveFirstLastCharacter(json.GetField("temporalStatus").Print());
@@ -43,14 +57,19 @@ public class PublicationEventParser  {
         temp_date = tool.RemoveFirstLastCharacter(json.GetField("startTime").Print());
         publicationevent.PublicationEventStartDate = Convert.ToDateTime(temp_date);
 
-        temp_date = tool.RemoveFirstLastCharacter(json.GetField("endTime").Print());
-        publicationevent.PublicationEventEndDate = Convert.ToDateTime(temp_date);
-
+        if (json.HasField("endTime"))
+        {
+            temp_date = tool.RemoveFirstLastCharacter(json.GetField("endTime").Print());
+            publicationevent.PublicationEventEndDate = Convert.ToDateTime(temp_date);
+        }
 
         return publicationevent;
     }
 
 
+
+    //Returns a JSONArray based on a list of PublicationEvent
+    //Each JSONObject from the JSONArray represents a PublicationEvent 
     public JSONObject GetJson(List<PublicationEvent> list_publicationevent)
     {
         JSONObject jsonobject = new JSONObject(JSONObject.Type.ARRAY);
@@ -66,7 +85,10 @@ public class PublicationEventParser  {
     }
 
 
-    public List<PublicationEvent> getListObject(JSONObject jsonarray)
+
+    //Returns a list of PublicationEvent Objects based on a JSONArray
+    //Each PublicationEvent from the list represents a JSONObject from the JSONArray
+    public List<PublicationEvent> GetListObject(JSONObject jsonarray)
     {
         List<PublicationEvent> list_publicationevent = new List<PublicationEvent>();
         JSONObject temp_json;
