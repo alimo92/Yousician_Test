@@ -47,13 +47,9 @@ public class NetworkingProgram : MonoBehaviour {
         urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "order", "publication.starttime:desc");
         urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "q", "laulu");
         urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "limit", "100");
-        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "offset", "0");
+        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "offset", "1000");
 
         url = urlbuilder.GetUrl(urlbuilder.GetListUrlItem());
-
-        Debug.Log(url);
-
-        url = urlbuilder.GetNewListUrl("100","20");
 
 
 
