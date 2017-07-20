@@ -63,6 +63,27 @@ public class UrlBuilder  {
         }
     }
 
+    //Replaces an UrlItem from a list of urlitems with a new value
+    public void AlterUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype, string new_urlitemvalue)
+    {
+        for(int i=0;i< list_url_item.Count; i++)
+        {
+            if(list_url_item[i].UrlItemType== urlitemtype)
+            {
+                list_url_item[i].UrlItemValue = new_urlitemvalue;
+            }
+        }
+    }
+
+    //get new URL with new offset and new limit
+    public string GetNewListUrl(string StartCount, string EndCount)
+    {
+        AlterUrlItemFromList(ListUrlItem, "offset", StartCount);
+        AlterUrlItemFromList(ListUrlItem, "limit", EndCount);
+
+        return GetUrl(ListUrlItem);
+    }
+
 
     //Retuns a constructed url, ready to use, based of a list of UrlItems and UrlBasic
     public string GetUrl(List<UrlItem> list_url_item)
@@ -78,6 +99,7 @@ public class UrlBuilder  {
 
         return url;
     }
+
 
     //Returns a constructed url with only two urlitems (app_key and app_id) which is the bare minimum
     public string GetUrl()

@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleService : MonoBehaviour {
+public class TitleService  {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public TitleService()
+    {
+
+    }
+
+    public string GetTitleByLangue(Program program, string language)
+    {
+        for(int i = 0; i < program.ProgramListTile.Count; i++)
+        {
+            if (program.ProgramListTile[i].TitleLanguage == language)
+            {
+                return program.ProgramListTile[i].TitleText;
+            }
+        }
+        return null;
+    }
+
 }

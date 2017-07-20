@@ -1,7 +1,19 @@
 ﻿using System.Collections;
 using System.Threading;
 
+/*
+ * Notes: 
+ * I did not write this class, I took it from a forum discussing an issue I had
+ * I had this problem in the project I am working on right now in my internship,
+ * I noticed fps drops after sending multiple HTTP requests and processing all the returned data in the StartCoroutine function,
+ * The solution I found is to process the data in a different thread and use the results of this processing in the Unity main Thread
+ * As a beginner in Unity, I am not sure this is the right way to tackle this problem but as far as I know, it considerably improved the performance
+*/
+
+
+
 public class ThreadedJob {
+
 
     private bool m_IsDone = false;
     private object m_Handle = new object();
