@@ -19,7 +19,7 @@ public class ProgramService  {
         AlterComponentProgram(prefab_programitem, program, language);
         var temp_object = GameObject.Instantiate(prefab_programitem);
         temp_object.name = titleservice.GetTitleByLangue(program, language)+" ("+program.ProgramTypeMedia+")" ;
-        temp_object.parent = parent.transform;
+        temp_object.transform.parent = parent.transform;
     }
 
 
@@ -38,15 +38,18 @@ public class ProgramService  {
 
         List<string> list_image_attributes = new List<string>();
 
-        prefab_programitem.GetChild(0).GetComponent<Text>().text= titleservice.GetTitleByLangue(program, language) + "  "+ program.ProgramTypeMedia;
+        prefab_programitem.GetChild(0).GetComponent<Text>().text= titleservice.GetTitleByLangue(program, language);
+
         if (program.ProgramImageId != "not available")
         {
-            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "jpg");
+            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
         }
         else
         {
-            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "http://images.earthcam.com/ec_metros/ourcams/fridays.jpg";
+            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
         }
+
+        prefab_programitem.GetChild(2).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
     }
 
     private List<string> InitImageAttributes()

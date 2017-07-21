@@ -67,7 +67,9 @@
      <Compile Include="Assets\Scripts\Services\TitleService.cs" />
      <Compile Include="Assets\Scripts\ThreadJobs\ProgramJob.cs" />
      <Compile Include="Assets\Scripts\ThreadJobs\ThreadedJob.cs" />
+     <Compile Include="Assets\Scripts\UI\ExtendList.cs" />
      <Compile Include="Assets\Scripts\UI\ImageLoader.cs" />
+     <Compile Include="Assets\Scripts\UI\TypeMediaIconLoader.cs" />
      <Compile Include="Assets\Scripts\Util\Tools.cs" />
      <None Include="Assets\JSON\readme.txt" />
      <None Include="Assets\Scripts\Configuration\UserKeys.txt" />

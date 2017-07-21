@@ -1,15 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ImageLoader : MonoBehaviour {
 
-    public string ImageUrl = "http://images.earthcam.com/ec_metros/ourcams/fridays.jpg";
+    public string ImageUrl = "";
+    private RawImage rawimage;
+
+    private Tools tool;
 
     // Use this for initialization
     void Start () {
-        StartCoroutine(WaitForResponse());
+        InitComponent();
+        if (ImageUrl == "")
+        {
+            rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
+        }
+        else
+        {
+            StartCoroutine(WaitForResponse());
+        }
     }
 	
 	// Update is called once per frame
@@ -25,7 +37,6 @@ public class ImageLoader : MonoBehaviour {
 
         if (Request.error == null)
         {
-            RawImage rawimage = GetComponent<RawImage>();
             rawimage.texture= Request.texture;
         }
         else
@@ -33,4 +44,13 @@ public class ImageLoader : MonoBehaviour {
             Debug.Log(Request.error);
         }
     }
+
+
+    private void InitComponent()
+    {
+        rawimage = GetComponent<RawImage>();
+        tool = new Tools();
+    }
+
+
 }

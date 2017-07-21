@@ -13,6 +13,7 @@ public class ProgramJob : ThreadedJob
     private Transform prefab_programitem;
     private Transform parent_programitems;
 
+
     public ProgramJob()
     {
         programparser = new ProgramParser();
@@ -39,10 +40,7 @@ public class ProgramJob : ThreadedJob
     // This is executed by the Unity main thread when the job is finished
     protected override void OnFinished()
     {
-        //programservice.CreateProgram(prefab_programitem, parent_programitems, list_program[0], "fi");
         programservice.CreateListProgram(prefab_programitem, parent_programitems, list_program, "fi");
-
-        Debug.Log(list_program.Count);
     }
 
 
