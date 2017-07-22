@@ -9,25 +9,33 @@ public class TypeMediaIconLoader : MonoBehaviour {
     private Tools tool;
 
     public string TypeMedia;
+    public bool flag = true;
 
     // Use this for initialization
     void Start () {
         InitComponent();
 
 
-        if (TypeMedia =="RadioContent")
-        {
-            rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/radioicon.png");
-        }
-        else if (TypeMedia =="TVContent")
-        {
-            rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/tvicon.png");
-        }
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (flag)
+        {
+
+            if (TypeMedia == "RadioContent")
+            {
+                rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/radioicon.png");
+            }
+            else if (TypeMedia == "TVContent")
+            {
+                rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/tvicon.png");
+            }
+
+
+            flag = false;
+        }
 	}
 
 

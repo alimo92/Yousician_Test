@@ -43,11 +43,8 @@ public class ProgramJob : ThreadedJob
     // This is executed by the Unity main thread when the job is finished
     protected override void OnFinished()
     {
-        //programservice.CreateListProgram(prefab_programitem, parent_programitems, list_program, "fi");
-
         programservice.CreateListProgram(prefab_program, parent_program, list_program, "fi", simple_object_pool);
 
-        Debug.Log(list_program.Count); 
     }
 
 

@@ -18,7 +18,7 @@ public class TitleService  {
                 return program.ProgramListTile[i].TitleText;
             }
         }
-        return null;
+        return "("+program.ProgramListTile[0].TitleLanguage+")"+" "+ program.ProgramListTile[0].TitleText;
     }
 
 }

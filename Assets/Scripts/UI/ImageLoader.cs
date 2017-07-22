@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class ImageLoader : MonoBehaviour {
 
     public string ImageUrl = "";
+    public bool flag = true;
+
     private RawImage rawimage;
 
     private Tools tool;
@@ -14,19 +16,24 @@ public class ImageLoader : MonoBehaviour {
     // Use this for initialization
     void Start () {
         InitComponent();
-        if (ImageUrl == "")
-        {
-            rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
-        }
-        else
-        {
-            StartCoroutine(WaitForResponse());
-        }
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (flag)
+        {
+            if (ImageUrl == "")
+            {
+                rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
+            }
+            else
+            {
+                StartCoroutine(WaitForResponse());
+            }
+
+            flag = false;
+        }
 	}
 
 
@@ -41,7 +48,7 @@ public class ImageLoader : MonoBehaviour {
         }
         else
         {
-            Debug.Log(Request.error);
+            rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
         }
     }
 

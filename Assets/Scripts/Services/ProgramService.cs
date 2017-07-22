@@ -50,15 +50,19 @@ public class ProgramService  {
     private void AlterProgramGameObject(GameObject temp_object, Program program, string language)
     {
         temp_object.transform.GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);
+
         temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
+        temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().flag = true;
 
         if (program.ProgramImageId != "not available")
         {
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
         }
         else
         {
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
         }
     }
 

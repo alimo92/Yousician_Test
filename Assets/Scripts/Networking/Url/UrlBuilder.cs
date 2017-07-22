@@ -64,6 +64,7 @@ public class UrlBuilder  {
     }
 
     //Replaces an UrlItem from a list of urlitems with a new value
+    //if urlitem not found, it's added with a the new value
     public void AlterUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype, string new_urlitemvalue)
     {
         bool found = false;
@@ -82,12 +83,12 @@ public class UrlBuilder  {
     }
 
     //get new URL with new offset and new limit
-    public string GetNewListUrl(string StartCount, string EndCount)
+    public string GetNewListUrl(List<UrlItem> list_url_item, string StartCount, string EndCount)
     {
-        AlterUrlItemFromList(ListUrlItem, "offset", StartCount);
-        AlterUrlItemFromList(ListUrlItem, "limit", EndCount);
+        AlterUrlItemFromList(list_url_item, "offset", StartCount);
+        AlterUrlItemFromList(list_url_item, "limit", EndCount);
 
-        return GetUrl(ListUrlItem);
+        return GetUrl(list_url_item);
     }
 
 

@@ -79,18 +79,6 @@ public class UrlManager : MonoBehaviour {
 
     private void HandleMediaTypeValue()
     {
-        /*
-        if(!TVToggle.isOn && RadioToggle.isOn)
-        {
-            TVToggle.isOn = false;
-            RadioToggle.isOn = true;
-        }
-        else if (TVToggle.isOn && !RadioToggle.isOn)
-        {
-            TVToggle.isOn = false;
-            RadioToggle.isOn = true;
-        }
-        */
 
         if(!TVToggle.isOn && !RadioToggle.isOn || TVToggle.isOn && RadioToggle.isOn)
         {

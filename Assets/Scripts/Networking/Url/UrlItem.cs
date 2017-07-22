@@ -1,4 +1,7 @@
-﻿
+﻿using UnityEngine;
+
+
+[System.Serializable]
 public class UrlItem {
 
     public string UrlItemType;
