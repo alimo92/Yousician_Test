@@ -2,21 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 public class NetworkingProgram : MonoBehaviour {
 
     private UrlBuilder urlbuilder;
-    private ImageUrlBuilder imageurlbuilder;
+    private UrlManager urlmanager;
 
     private WWW Request;
-    private string url;
+    public string URL;
 
     private ProgramJob programjob;
 
     [SerializeField]
-    private Transform prefab_programitem;
+    private Transform prefab_program;
 
-    private GameObject parent_programitems;
+    [SerializeField]
+    private Transform prefab_content;
+
+    [SerializeField]
+    private GameObject object_pool;
+
+    [SerializeField]
+    private int step=10;
+
+    [SerializeField]
+    private GameObject ScrollView;
+
+
+
     private ExtendList extendlist;
     private bool SendindRequestAllowed = true;
     private int count = 0;
@@ -27,23 +41,27 @@ public class NetworkingProgram : MonoBehaviour {
     void Start () {
         initComponent();
         StartCoroutine(WaitForResponse());
-        //var temp_object = GameObject.Instantiate(prefab_programitem);
-        //temp_object.parent = parent_programitems.transform;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-
-        if (SendindRequestAllowed && extendlist.end_reached)
+        /*
+        if (SendindRequestAllowed && extendlist.end_reached )
         {
             SendindRequestAllowed = false;
-            int temp = count * 10;
-            url = urlbuilder.GetNewListUrl(temp+"","10");
-            //StartCoroutine(WaitForResponse());
-            Debug.Log(parent_programitems.transform.childCount);
+
+            int temp = count * step;
+
+            //URL = urlmanager.URL;
+            //URL = urlbuilder.GetNewListUrl(temp + "", step + "");
+
+
+
+            StartCoroutine(WaitForResponse());
+            //Debug.Log(parent_programitems.transform.childCount);
         }
-        
+        */
 
         if (programjob != null)
         {
@@ -55,49 +73,50 @@ public class NetworkingProgram : MonoBehaviour {
             }
         }
 
+
     }
 
 
     private void initComponent()
     {
+        
         urlbuilder = new UrlBuilder();
-        imageurlbuilder = new ImageUrlBuilder();
+        
+        
+        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "order", "publication.starttime:desc");
+        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "q", "laulu");
+        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "mediaobject", "video");
+        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "limit", "50");
+        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "offset", "0");
 
-        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "order", "publication.starttime:desc");
-        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "q", "laulu");
-        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "limit", "50");
-        urlbuilder.AddUrlItemToList(urlbuilder.GetListUrlItem(), "offset", "0");
-
-        url = urlbuilder.GetUrl(urlbuilder.GetListUrlItem());
-
-
-
-        parent_programitems = GameObject.Find("ListProgram");
-        if (parent_programitems == null)
-        {
-            Debug.Log("Image Gameobject not found");
-        }
-
-        extendlist = GameObject.Find("Panel").GetComponent<ExtendList>();
+        URL = urlbuilder.GetUrl(urlbuilder.GetListUrlItem());
+        
+        
+        extendlist = ScrollView.GetComponent<ExtendList>();
         if (extendlist == null)
         {
             Debug.Log("extendlist not found");
         }
 
-        Debug.Log(url);
+        urlmanager = GetComponent<UrlManager>();
+        if (urlmanager == null)
+        {
+            Debug.Log("urlmanager not found");
+        }
+
 
     }
 
 
     IEnumerator WaitForResponse()
     {
-        Request = new WWW(url);
+        Request = new WWW(URL);
         yield return Request;
 
         if (Request.error == null)
         {
 
-            programjob = new ProgramJob(Request.text, prefab_programitem, parent_programitems.transform);
+            programjob = new ProgramJob(Request.text, prefab_program, prefab_content, object_pool);
 
             programjob.Start();
             
@@ -107,4 +126,6 @@ public class NetworkingProgram : MonoBehaviour {
             Debug.Log(Request.error);
         }
     }
+
+
 }

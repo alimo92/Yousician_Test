@@ -14,42 +14,52 @@ public class ProgramService  {
         imageurlbuilder = new ImageUrlBuilder();
     }
 
-    public void CreateProgram(Transform prefab_programitem, Transform parent, Program program, string language)
+    public void CreateProgram(Transform prefab, Transform parent, Program program, string language, SimpleObjectPool simple_object_pool)
     {
-        AlterComponentProgram(prefab_programitem, program, language);
-        var temp_object = GameObject.Instantiate(prefab_programitem);
+        GameObject temp_object = simple_object_pool.GetObject();
+        AlterProgramComponent(temp_object, program);
+        AlterProgramGameObject(temp_object, program, language);
         temp_object.name = titleservice.GetTitleByLangue(program, language)+" ("+program.ProgramTypeMedia+")" ;
-        temp_object.transform.parent = parent.transform;
+        temp_object.transform.parent = parent;
+
     }
 
 
-    public void CreateListProgram(Transform prefab_programitem, Transform parent, List<Program> list_program, string language)
+    public void CreateListProgram(Transform prefab, Transform parent, List<Program> list_program, string language, SimpleObjectPool simple_object_pool)
     {
         for(int i = 0; i < list_program.Count; i++)
         {
-            CreateProgram(prefab_programitem, parent, list_program[i], language);
+            CreateProgram(prefab, parent, list_program[i], language, simple_object_pool);
         }
     }
 
 
-
-    private void AlterComponentProgram(Transform prefab_programitem, Program program, string language)
+    
+    private void AlterProgramComponent(GameObject temp_object, Program program)
     {
+        temp_object.GetComponent<Program>().ProgramId = program.ProgramId;
+        temp_object.GetComponent<Program>().ProgramListTile = program.ProgramListTile;
+        temp_object.GetComponent<Program>().ProgramListPublicationEvent = program.ProgramListPublicationEvent;
+        temp_object.GetComponent<Program>().ProgramListDescription = program.ProgramListDescription;
+        temp_object.GetComponent<Program>().ProgramType = program.ProgramType;
+        temp_object.GetComponent<Program>().ProgramTypeMedia = program.ProgramTypeMedia;
+        temp_object.GetComponent<Program>().ProgramImageId = program.ProgramImageId;
+    }
+    
 
-        List<string> list_image_attributes = new List<string>();
-
-        prefab_programitem.GetChild(0).GetComponent<Text>().text= titleservice.GetTitleByLangue(program, language);
+    private void AlterProgramGameObject(GameObject temp_object, Program program, string language)
+    {
+        temp_object.transform.GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);
+        temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
 
         if (program.ProgramImageId != "not available")
         {
-            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
         }
         else
         {
-            prefab_programitem.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
         }
-
-        prefab_programitem.GetChild(2).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
     }
 
     private List<string> InitImageAttributes()
@@ -61,6 +71,18 @@ public class ProgramService  {
         list_image_attributes.Add("r_max");
 
         return list_image_attributes;
+    }
+
+
+
+    public void RemoveAllPrograms(Transform parent, SimpleObjectPool simple_object_pool)
+    {
+        int temp = parent.childCount;
+        for(int i = 0; i < temp; i++)
+        {
+            simple_object_pool.ReturnObject(parent.GetChild(0).gameObject);
+        }
+
     }
 
 }

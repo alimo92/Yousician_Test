@@ -10,8 +10,10 @@ public class ProgramJob : ThreadedJob
 
     private List<Program> list_program;
 
-    private Transform prefab_programitem;
-    private Transform parent_programitems;
+    private Transform prefab_program;
+    private Transform parent_program;
+
+    private SimpleObjectPool simple_object_pool;
 
 
     public ProgramJob()
@@ -21,13 +23,14 @@ public class ProgramJob : ThreadedJob
     }
 
 
-    public ProgramJob(string programresponse, Transform prefab, Transform parent)
+    public ProgramJob(string programresponse, Transform prefab, Transform parent, GameObject objectpool)
     {
         ProgramResponse = programresponse;
         programparser = new ProgramParser();
         programservice = new ProgramService();
-        prefab_programitem = prefab;
-        parent_programitems = parent;
+        prefab_program = prefab;
+        parent_program = parent;
+        simple_object_pool = objectpool.GetComponent<SimpleObjectPool>() ;
     }
 
 
@@ -40,7 +43,11 @@ public class ProgramJob : ThreadedJob
     // This is executed by the Unity main thread when the job is finished
     protected override void OnFinished()
     {
-        programservice.CreateListProgram(prefab_programitem, parent_programitems, list_program, "fi");
+        //programservice.CreateListProgram(prefab_programitem, parent_programitems, list_program, "fi");
+
+        programservice.CreateListProgram(prefab_program, parent_program, list_program, "fi", simple_object_pool);
+
+        Debug.Log(list_program.Count); 
     }
 
 

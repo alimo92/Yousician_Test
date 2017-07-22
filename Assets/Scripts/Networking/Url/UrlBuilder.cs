@@ -66,12 +66,18 @@ public class UrlBuilder  {
     //Replaces an UrlItem from a list of urlitems with a new value
     public void AlterUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype, string new_urlitemvalue)
     {
+        bool found = false;
         for(int i=0;i< list_url_item.Count; i++)
         {
             if(list_url_item[i].UrlItemType== urlitemtype)
             {
                 list_url_item[i].UrlItemValue = new_urlitemvalue;
+                found = true;
             }
+        }
+        if (!found)
+        {
+            AddUrlItemToList(list_url_item, urlitemtype, new_urlitemvalue);
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Program {
+public class Program : MonoBehaviour {
 
     public string ProgramTypeMedia;
     public string ProgramType;

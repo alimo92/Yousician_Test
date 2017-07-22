@@ -29,9 +29,9 @@ public class ExtendList : MonoBehaviour {
     private bool HandleEnd_Reached(ScrollRect scrollrect, bool end_reached)
     {
         rect_position = scrollrect.normalizedPosition;
-        if (rect_position.y <0.01)
+        if (rect_position.y <0.001)
         {
-            scrollrect.normalizedPosition = new Vector2(0,0.03f);
+            scrollrect.normalizedPosition = new Vector2(0,0.01f);
             return true;
         }
         else
