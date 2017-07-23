@@ -161,7 +161,7 @@ public class NetworkingProgram : MonoBehaviour {
         if (Request.error == null)
         {
 
-            programjob = new ProgramJob(Request.text, prefab_program, prefab_content, object_pool);
+            programjob = new ProgramJob(Request.text, prefab_program, prefab_content,Language, object_pool);
 
             programjob.Start();
             
@@ -178,10 +178,10 @@ public class NetworkingProgram : MonoBehaviour {
         List<UrlItem> list = urlbuilder.GetListUrlItem();
 
         urlbuilder.AlterUrlItemFromList(list, "order", "publication.starttime:desc");
-        urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "limit", step+"");
+        urlbuilder.AlterUrlItemFromList(list, "limit", step+"");
         if (SafeCheckLanguage(Language))
         {
-            urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "language", Language);
+            urlbuilder.AlterUrlItemFromList(list, "language", Language);
         }
 
 

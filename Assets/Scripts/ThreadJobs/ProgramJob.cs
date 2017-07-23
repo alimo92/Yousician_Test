@@ -4,6 +4,7 @@ using UnityEngine;
 public class ProgramJob : ThreadedJob
 {
     public string ProgramResponse;
+    private string ProgramLanguage;
 
     private ProgramParser programparser;
     private ProgramService programservice;
@@ -23,13 +24,14 @@ public class ProgramJob : ThreadedJob
     }
 
 
-    public ProgramJob(string programresponse, Transform prefab, Transform parent, GameObject objectpool)
+    public ProgramJob(string programresponse, Transform prefab, Transform parent,string language, GameObject objectpool)
     {
         ProgramResponse = programresponse;
         programparser = new ProgramParser();
         programservice = new ProgramService();
         prefab_program = prefab;
         parent_program = parent;
+        ProgramLanguage = language;
         simple_object_pool = objectpool.GetComponent<SimpleObjectPool>() ;
     }
 
@@ -43,7 +45,7 @@ public class ProgramJob : ThreadedJob
     // This is executed by the Unity main thread when the job is finished
     protected override void OnFinished()
     {
-        programservice.CreateListProgram(prefab_program, parent_program, list_program, "fi", simple_object_pool);
+        programservice.CreateListProgram(prefab_program, parent_program, list_program, ProgramLanguage, simple_object_pool);
 
     }
 
@@ -58,7 +60,5 @@ public class ProgramJob : ThreadedJob
     {
         JSONObject JsonResponse = new JSONObject(ProgramResponse);
         list_program = programparser.GetListObject(GetData(JsonResponse));
-
-
     }
 }

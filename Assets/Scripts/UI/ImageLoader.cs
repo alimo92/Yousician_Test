@@ -8,10 +8,13 @@ public class ImageLoader : MonoBehaviour {
 
     public string ImageUrl = "";
     public bool flag = true;
+    public string ImageId;
+    public List<string> ListImageAttributes;
 
     private RawImage rawimage;
 
     private Tools tool;
+    private ImageUrlBuilder imageurlbuilder;
 
     [SerializeField]
     private GameObject loading_circle;
@@ -26,7 +29,8 @@ public class ImageLoader : MonoBehaviour {
 	void Update () {
         if (flag)
         {
-            if (ImageUrl == "")
+
+            if (ImageId == "not available")
             {
                 loading_circle.SetActive(false);
                 GetComponent<RawImage>().enabled = true;
@@ -34,6 +38,7 @@ public class ImageLoader : MonoBehaviour {
             }
             else
             {
+                ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(ListImageAttributes), ImageId, "png");
                 loading_circle.SetActive(true);
                 StartCoroutine(WaitForResponse());
             }
@@ -67,6 +72,7 @@ public class ImageLoader : MonoBehaviour {
     private void InitComponent()
     {
         rawimage = GetComponent<RawImage>();
+        imageurlbuilder = new ImageUrlBuilder();
         tool = new Tools();
     }
 

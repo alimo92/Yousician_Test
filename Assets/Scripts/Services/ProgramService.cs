@@ -58,11 +58,13 @@ public class ProgramService  {
         {
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageId = program.ProgramImageId;
         }
         else
         {
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageId = "not available";
         }
     }
 
