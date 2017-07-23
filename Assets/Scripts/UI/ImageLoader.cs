@@ -13,6 +13,9 @@ public class ImageLoader : MonoBehaviour {
 
     private Tools tool;
 
+    [SerializeField]
+    private GameObject loading_circle;
+
     // Use this for initialization
     void Start () {
         InitComponent();
@@ -25,10 +28,13 @@ public class ImageLoader : MonoBehaviour {
         {
             if (ImageUrl == "")
             {
+                loading_circle.SetActive(false);
+                GetComponent<RawImage>().enabled = true;
                 rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
             }
             else
             {
+                loading_circle.SetActive(true);
                 StartCoroutine(WaitForResponse());
             }
 
@@ -44,10 +50,15 @@ public class ImageLoader : MonoBehaviour {
 
         if (Request.error == null)
         {
+            loading_circle.SetActive(false);
+            GetComponent<RawImage>().enabled = true;
             rawimage.texture= Request.texture;
+
         }
         else
         {
+            loading_circle.SetActive(false);
+            GetComponent<RawImage>().enabled = true;
             rawimage.texture = tool.LoadImage("./Assets/Sprites/Icons/noimage.png");
         }
     }

@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\UI\ImageLoader.cs" />
     <Compile Include="Assets\Scripts\UI\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\UI\TypeMediaIconLoader.cs" />
+    <Compile Include="Assets\Scripts\Util\LoadingCircle.cs" />
     <Compile Include="Assets\Scripts\Util\Tools.cs" />
   </ItemGroup>
   <ItemGroup>

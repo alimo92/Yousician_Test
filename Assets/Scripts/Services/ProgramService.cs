@@ -84,6 +84,8 @@ public class ProgramService  {
         int temp = parent.childCount;
         for(int i = 0; i < temp; i++)
         {
+            parent.GetChild(0).GetChild(3).gameObject.SetActive(true);
+            parent.GetChild(0).GetChild(1).GetComponent<RawImage>().enabled = false;
             simple_object_pool.ReturnObject(parent.GetChild(0).gameObject);
         }
 

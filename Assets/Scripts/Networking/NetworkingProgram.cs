@@ -9,6 +9,8 @@ public class NetworkingProgram : MonoBehaviour {
     private UrlBuilder urlbuilder;
     public string URL;
 
+    public string Language;
+
     public string SearchKeyWord;
 
     private WWW Request;
@@ -54,11 +56,13 @@ public class NetworkingProgram : MonoBehaviour {
     [SerializeField]
     private List<UrlItem> list_url_item;
 
-
-
     [SerializeField]
     private GameObject UrlObject;
 
+    [SerializeField]
+    private GameObject big_loading_circle;
+
+    private bool SearchKeywordChanged = false;
 
     // Use this for initialization
     void Start () {
@@ -80,7 +84,7 @@ public class NetworkingProgram : MonoBehaviour {
             //URL = urlbuilder.GetNewListUrl(temp + "", step + "");
             urlbuilder.AlterUrlItemFromList(list_url_item, "offset", temp + "");
             URL = urlbuilder.GetUrl(list_url_item);
-
+            big_loading_circle.SetActive(true);
             StartCoroutine(WaitForResponse());
             //Debug.Log(parent_programitems.transform.childCount);
         }
@@ -93,6 +97,19 @@ public class NetworkingProgram : MonoBehaviour {
                 SendindRequestAllowed = true;
                 programjob = null;
                 count++;
+                big_loading_circle.SetActive(false);
+            }
+        }
+
+        if (SearchKeywordChanged)
+        {
+            if (timer(1))
+            {
+                SearchKeywordChanged = false;
+                count = 0;
+                SearchKeyWord = SearchBar.text;
+                UpdateListURLItem();
+                programservice.RemoveAllPrograms(prefab_content, object_pool.GetComponent<SimpleObjectPool>());
             }
         }
 
@@ -162,6 +179,11 @@ public class NetworkingProgram : MonoBehaviour {
 
         urlbuilder.AlterUrlItemFromList(list, "order", "publication.starttime:desc");
         urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "limit", step+"");
+        if (SafeCheckLanguage(Language))
+        {
+            urlbuilder.AlterUrlItemFromList(urlbuilder.GetListUrlItem(), "language", Language);
+        }
+
 
         return list;
     } 
@@ -169,10 +191,9 @@ public class NetworkingProgram : MonoBehaviour {
 
     private void InputListener(string value)
     {
-        count = 0;
-        SearchKeyWord = SearchBar.text;
-        UpdateListURLItem();
-        programservice.RemoveAllPrograms(prefab_content, object_pool.GetComponent<SimpleObjectPool>());
+
+        SearchKeywordChanged = true; 
+
     }
 
 
@@ -239,6 +260,16 @@ public class NetworkingProgram : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    private bool SafeCheckLanguage(string language)
+    {
+        if(language=="fi" || language == "sv")
+        {
+            return true;
+        }
+
+        return false; 
     }
 
 }
