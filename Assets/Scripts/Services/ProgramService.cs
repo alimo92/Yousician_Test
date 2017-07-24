@@ -8,12 +8,14 @@ public class ProgramService  {
     private TitleService titleservice;
     private ImageUrlBuilder imageurlbuilder;
     private DescriptionService descriptionservice;
+    private PublicationEventService publicationeventservice;
 
     public ProgramService()
     {
         titleservice = new TitleService();
         imageurlbuilder = new ImageUrlBuilder();
         descriptionservice = new DescriptionService();
+        publicationeventservice = new PublicationEventService();
     }
 
     public void CreateProgram(Transform prefab, Transform parent, Program program, string language, SimpleObjectPool simple_object_pool)
@@ -107,6 +109,14 @@ public class ProgramService  {
 
         header.transform.GetChild(0).GetChild(3).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
         header.transform.GetChild(0).GetChild(3).GetComponent<TypeMediaIconLoader>().flag = true;
+
+
+        header.transform.GetChild(0).GetChild(4).GetComponent<Text>().text = "Next Publication :  " + publicationeventservice.GetNextPublication(program, "Next").PublicationEventStartDate;
+
+
+        header.transform.GetChild(0).GetChild(5).GetComponent<Text>().text = "Previous Publication :  " + publicationeventservice.GetNextPublication(program, "Previous").PublicationEventStartDate;
+
+
     }
 
 }

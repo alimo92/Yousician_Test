@@ -9,6 +9,7 @@ public class PopulateProgram : MonoBehaviour {
     private ProgramParser programparser;
     private PanelManager panelmanager;
     private ProgramService programservice;
+    private PublicationEventService publicationeventservice;
 
     public bool flag = false;
 
@@ -49,6 +50,7 @@ public class PopulateProgram : MonoBehaviour {
         }
 
         programservice = new ProgramService();
+        publicationeventservice = new PublicationEventService();
     }
 
 
