@@ -100,8 +100,12 @@
     <Compile Include="Assets\Scripts\Services\TitleService.cs" />
     <Compile Include="Assets\Scripts\ThreadJobs\ProgramJob.cs" />
     <Compile Include="Assets\Scripts\ThreadJobs\ThreadedJob.cs" />
+    <Compile Include="Assets\Scripts\UI\BackButton.cs" />
     <Compile Include="Assets\Scripts\UI\ExtendList.cs" />
     <Compile Include="Assets\Scripts\UI\ImageLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\PanelManager.cs" />
+    <Compile Include="Assets\Scripts\UI\PopulateProgram.cs" />
+    <Compile Include="Assets\Scripts\UI\SelectProgram.cs" />
     <Compile Include="Assets\Scripts\UI\SimpleObjectPool.cs" />
     <Compile Include="Assets\Scripts\UI\TypeMediaIconLoader.cs" />
     <Compile Include="Assets\Scripts\Util\LoadingCircle.cs" />

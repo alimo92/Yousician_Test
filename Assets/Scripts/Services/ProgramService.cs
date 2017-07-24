@@ -98,10 +98,15 @@ public class ProgramService  {
     public void SetDetailProgramScreen(GameObject header, Program program, string language)
     {
         header.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);
+
         header.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = descriptionservice.GetDescriptionByLanguage(program, language);
+
         header.transform.GetChild(0).GetChild(2).GetComponent<ImageLoader>().ImageId = program.ProgramImageId;
         header.transform.GetChild(0).GetChild(2).GetComponent<ImageLoader>().flag = true;
         header.transform.GetChild(0).GetChild(2).GetComponent<RawImage>().enabled= false;
+
+        header.transform.GetChild(0).GetChild(3).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
+        header.transform.GetChild(0).GetChild(3).GetComponent<TypeMediaIconLoader>().flag = true;
     }
 
 }
