@@ -7,11 +7,13 @@ public class ProgramService  {
 
     private TitleService titleservice;
     private ImageUrlBuilder imageurlbuilder;
+    private DescriptionService descriptionservice;
 
     public ProgramService()
     {
         titleservice = new TitleService();
         imageurlbuilder = new ImageUrlBuilder();
+        descriptionservice = new DescriptionService();
     }
 
     public void CreateProgram(Transform prefab, Transform parent, Program program, string language, SimpleObjectPool simple_object_pool)
@@ -91,6 +93,15 @@ public class ProgramService  {
             simple_object_pool.ReturnObject(parent.GetChild(0).gameObject);
         }
 
+    }
+
+    public void SetDetailProgramScreen(GameObject header, Program program, string language)
+    {
+        header.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);
+        header.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = descriptionservice.GetDescriptionByLanguage(program, language);
+        header.transform.GetChild(0).GetChild(2).GetComponent<ImageLoader>().ImageId = program.ProgramImageId;
+        header.transform.GetChild(0).GetChild(2).GetComponent<ImageLoader>().flag = true;
+        header.transform.GetChild(0).GetChild(2).GetComponent<RawImage>().enabled= false;
     }
 
 }
