@@ -5,12 +5,14 @@ using System;
 
 public class PublicationEventService {
 
+    private string no_date="---";
+
 	public PublicationEventService()
     {
 
     }
 
-    public PublicationEvent GetNextPublication(Program program, string Type)
+    public PublicationEvent GetPublication(Program program, string Type)
     {
         List<PublicationEvent> listpublicationevent = program.ProgramListPublicationEvent;
         List<TimeSpan> list_delta_time = GetListDelta_TimeSpan(program);
@@ -32,6 +34,32 @@ public class PublicationEventService {
     }
 
 
+    public string GetStringPublicationEvent(PublicationEvent publicationevent, string Type)
+    {
+
+        if (Type == "Next")
+        {
+            if (publicationevent.PublicationEventStartDate == default(DateTime))
+            {
+                return no_date;
+            }
+            else
+            {
+                return publicationevent.PublicationEventStartDate+"";
+            }
+        }else if (Type == "Previous")
+        {
+            if (publicationevent.PublicationEventStartDate == default(DateTime))
+            {
+                return no_date;
+            }
+            else
+            {
+                return publicationevent.PublicationEventStartDate + "";
+            }
+        }
+        return null;
+    }
 
     private List<TimeSpan> GetListDelta_TimeSpan(Program program)
     {
@@ -105,5 +133,12 @@ public class PublicationEventService {
 
         return new PublicationEvent();
 
+    }
+
+
+    public TimeSpan GetDurationPublicationEvent(PublicationEvent publicationevent)
+    {
+        TimeSpan timespan = publicationevent.PublicationEventEndDate.Subtract(publicationevent.PublicationEventStartDate);
+        return timespan;
     }
 }

@@ -10,6 +10,7 @@ public class PopulateProgram : MonoBehaviour {
     private PanelManager panelmanager;
     private ProgramService programservice;
     private PublicationEventService publicationeventservice;
+    private NetworkingProgram networkingprogram;
 
     public bool flag = false;
 
@@ -25,7 +26,7 @@ public class PopulateProgram : MonoBehaviour {
         if (panelmanager.state && programselected.ProgramId!= GetComponent<Program>().ProgramId)
         {
             PopulateProgramComponent(programselected);
-            programservice.SetDetailProgramScreen(transform.gameObject, programselected,"fi");
+            programservice.SetDetailProgramScreen(transform.gameObject, programselected, networkingprogram.Language);
         }
 		
 	}
@@ -47,6 +48,11 @@ public class PopulateProgram : MonoBehaviour {
         if (panelmanager == null)
         {
             Debug.Log("PanelManager not found");
+        }
+        networkingprogram = GameObject.Find("Networking").GetComponent<NetworkingProgram>();
+        if (networkingprogram == null)
+        {
+            Debug.Log("NetworkingProgram not found");
         }
 
         programservice = new ProgramService();

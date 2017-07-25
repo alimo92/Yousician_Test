@@ -111,11 +111,15 @@ public class ProgramService  {
         header.transform.GetChild(0).GetChild(3).GetComponent<TypeMediaIconLoader>().flag = true;
 
 
-        header.transform.GetChild(0).GetChild(4).GetComponent<Text>().text = "Next Publication :  " + publicationeventservice.GetNextPublication(program, "Next").PublicationEventStartDate;
+        PublicationEvent Next = publicationeventservice.GetPublication(program, "Next");
+        PublicationEvent Previous = publicationeventservice.GetPublication(program, "Previous");
 
+        header.transform.GetChild(0).GetChild(4).GetComponent<Text>().text = "Next Publication :  \n" + publicationeventservice.GetStringPublicationEvent(Next, "Previous");
 
-        header.transform.GetChild(0).GetChild(5).GetComponent<Text>().text = "Previous Publication :  " + publicationeventservice.GetNextPublication(program, "Previous").PublicationEventStartDate;
+        header.transform.GetChild(0).GetChild(5).GetComponent<Text>().text = "Previous Publication :  \n" + publicationeventservice.GetStringPublicationEvent(Previous, "Previous");
 
+        header.transform.GetChild(0).GetChild(6).GetComponent<Text>().text = "Duration :  " + publicationeventservice.GetDurationPublicationEvent(Next);
+        header.transform.GetChild(0).GetChild(7).GetComponent<Text>().text = "Duration :  " + publicationeventservice.GetDurationPublicationEvent(Previous);
 
     }
 

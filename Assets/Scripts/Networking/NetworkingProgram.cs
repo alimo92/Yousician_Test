@@ -64,6 +64,20 @@ public class NetworkingProgram : MonoBehaviour {
 
     private bool SearchKeywordChanged = false;
 
+
+
+    [SerializeField]
+    private GameObject FinnishToggleObject;
+
+    [SerializeField]
+    private GameObject SwedishToggleObject;
+
+
+    private Toggle FinnishToggle;
+    private Toggle SwedishToggle;
+
+    private bool language_state = true; 
+
     // Use this for initialization
     void Start () {
         initComponent();
@@ -86,7 +100,6 @@ public class NetworkingProgram : MonoBehaviour {
             URL = urlbuilder.GetUrl(list_url_item);
             big_loading_circle.SetActive(true);
             StartCoroutine(WaitForResponse());
-            //Debug.Log(parent_programitems.transform.childCount);
         }
         
 
@@ -133,6 +146,10 @@ public class NetworkingProgram : MonoBehaviour {
 
         SearchBar = SearchBarObject.GetComponent<InputField>();
         SearchBar.onValueChanged.AddListener(InputListener);
+
+
+        FinnishToggle = FinnishToggleObject.GetComponent<Toggle>();
+        FinnishToggle.onValueChanged.AddListener(LanguageToggleListener);
 
 
         list_url_item = InitListURLItem(urlbuilder);
@@ -205,6 +222,26 @@ public class NetworkingProgram : MonoBehaviour {
         programservice.RemoveAllPrograms(prefab_content, object_pool.GetComponent<SimpleObjectPool>());
     }
 
+    private void LanguageToggleListener(bool value)
+    {
+        if (language_state != value)
+        {
+            language_state = !language_state;
+            count = 0;
+            if (value)
+            {
+                Language = "fi";
+            }
+            else
+            {
+                Language = "sv";
+            }
+            UpdateListURLItem();
+            programservice.RemoveAllPrograms(prefab_content, object_pool.GetComponent<SimpleObjectPool>());
+        }
+
+    }
+
 
     private void HandleMediaTypeValue()
     {
@@ -245,6 +282,11 @@ public class NetworkingProgram : MonoBehaviour {
         {
             urlbuilder.AlterUrlItemFromList(list_url_item, "q", SearchKeyWord);
         }
+        else
+        {
+            urlbuilder.RemoveUrlItemFromList(list_url_item,"q");
+        }
+        urlbuilder.AlterUrlItemFromList(list_url_item, "language", Language);
     }
 
     private float time = 0;

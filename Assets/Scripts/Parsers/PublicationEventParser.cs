@@ -42,6 +42,7 @@ public class PublicationEventParser  {
         if (json.HasField("duration"))
         {
             publicationevent.PublicationEventDuration = tool.RemoveFirstLastCharacter(json.GetField("duration").Print());
+            
         }
         else if (json.HasField("media"))
         {
