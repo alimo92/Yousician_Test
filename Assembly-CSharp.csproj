@@ -57,7 +57,6 @@
      <Compile Include="Assets\Scripts\Networking\Url\ImageUrlBuilder.cs" />
      <Compile Include="Assets\Scripts\Networking\Url\UrlBuilder.cs" />
      <Compile Include="Assets\Scripts\Networking\Url\UrlItem.cs" />
-     <Compile Include="Assets\Scripts\Networking\UrlManager.cs" />
      <Compile Include="Assets\Scripts\Parsers\DescriptionParser.cs" />
      <Compile Include="Assets\Scripts\Parsers\ProgramParser.cs" />
      <Compile Include="Assets\Scripts\Parsers\PublicationEventParser.cs" />

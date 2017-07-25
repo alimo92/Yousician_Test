@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LoadingCircle : MonoBehaviour {
 
+
+    /*
+        a script for a simple loading circle animation 
+    */
     private RectTransform rectComponent;
     private float rotateSpeed = 200f;
 

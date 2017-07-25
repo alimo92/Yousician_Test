@@ -45,6 +45,8 @@ public class ProgramParser  {
         program.ProgramType = tool.RemoveFirstLastCharacter(json.GetField("type").Print());
         program.ProgramTypeMedia = tool.RemoveFirstLastCharacter(json.GetField("typeMedia").Print());
 
+
+        //check if "image" is not empty
         if (json.GetField("image").keys.Count != 0)
         {
             program.ProgramImageId = tool.RemoveFirstLastCharacter(json.GetField("image").GetField("id").Print());

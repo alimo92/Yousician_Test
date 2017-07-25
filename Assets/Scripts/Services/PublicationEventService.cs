@@ -5,6 +5,7 @@ using System;
 
 public class PublicationEventService {
 
+    //value to show when no publication found
     private string no_date="---";
 
 	public PublicationEventService()
@@ -12,10 +13,13 @@ public class PublicationEventService {
 
     }
 
+    //Returns a PublicationEvent from a program based on a Type
+    //Type only accepts "Next" for the nearest next publication and "Previous" for the last publication 
     public PublicationEvent GetPublication(Program program, string Type)
     {
-        List<PublicationEvent> listpublicationevent = program.ProgramListPublicationEvent;
-        List<TimeSpan> list_delta_time = GetListDelta_TimeSpan(program);
+
+        List<PublicationEvent> listpublicationevent = program.ProgramListPublicationEvent; // get list of publication events
+        List<TimeSpan> list_delta_time = GetListDelta_TimeSpan(program); // get a list of timespans between NOW and the starting date of the publication events list 
         TimeSpan delta_time;
 
         if (Type == "Next")
@@ -34,6 +38,8 @@ public class PublicationEventService {
     }
 
 
+    //Returns a proper string based on the publication event to show the startingdate
+    //This returns a no_data string when the publication is not found
     public string GetStringPublicationEvent(PublicationEvent publicationevent, string Type)
     {
 
@@ -61,6 +67,8 @@ public class PublicationEventService {
         return null;
     }
 
+
+    //Returns a list of timespans between NOW and starting date of the publication events
     private List<TimeSpan> GetListDelta_TimeSpan(Program program)
     {
         List<PublicationEvent> listpublicationevent = program.ProgramListPublicationEvent;
@@ -77,6 +85,9 @@ public class PublicationEventService {
         return list_delta_time;
     }
 
+
+    //Get the nearest time span from a list of time spans
+    //The nearest timespan would be the highest value from the list under 0 (timespan <0)
     private TimeSpan GetNearestTimeSpan(List<TimeSpan> list_delta_time)
     {
         TimeSpan delta_time = list_delta_time[0];
@@ -97,6 +108,8 @@ public class PublicationEventService {
         return delta_time;
     }
 
+    //Get last time span from a list of time spans
+    //The last timespan would be a the lowest value from the list superior to 0 (timespan >0)
     private TimeSpan GetPreviousTimeSpan(List<TimeSpan> list_delta_time)
     {
         TimeSpan delta_time = list_delta_time[0];
@@ -118,6 +131,7 @@ public class PublicationEventService {
     }
 
 
+    //Returns the publication event linked to the timespan
     private PublicationEvent GetPublicationEventByTimeSpan(List<TimeSpan> list_delta_time, TimeSpan delta_time, List<PublicationEvent> listpublicationevent)
     {
         if (delta_time != TimeSpan.Zero)
@@ -136,6 +150,7 @@ public class PublicationEventService {
     }
 
 
+    //Get the duration of an EventPublication
     public TimeSpan GetDurationPublicationEvent(PublicationEvent publicationevent)
     {
         TimeSpan timespan = publicationevent.PublicationEventEndDate.Subtract(publicationevent.PublicationEventStartDate);

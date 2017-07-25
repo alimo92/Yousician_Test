@@ -10,6 +10,8 @@ public class DescriptionService {
 
     }
 
+    //Returns a language description based on a program
+    //language parameter only accept "fi" for finnish and "sv" for swedish
     public string GetDescriptionByLanguage(Program program, string language)
     {
         for(int i = 0; i < program.ProgramListDescription.Count; i++)

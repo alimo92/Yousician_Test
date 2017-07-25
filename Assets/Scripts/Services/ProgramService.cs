@@ -18,17 +18,29 @@ public class ProgramService  {
         publicationeventservice = new PublicationEventService();
     }
 
+
+    //creates a program item and put it in the list
+    //
     public void CreateProgram(Transform prefab, Transform parent, Program program, string language, SimpleObjectPool simple_object_pool)
     {
+        //takes object from the object_pool, if not found, creates a new one
         GameObject temp_object = simple_object_pool.GetObject();
+
+        // Alter Program component based on the new program object
         AlterProgramComponent(temp_object, program);
-        AlterProgramGameObject(temp_object, program, language);
+
+        // change the fields like title and imageID in a button based on the language
+        AlterProgramGameObject(temp_object, program, language); 
+
+        //gives a title to the gameobject
         temp_object.name = titleservice.GetTitleByLangue(program, language)+" ("+program.ProgramTypeMedia+")" ;
+
+        //put the gameobject in the scrolling list
         temp_object.transform.parent = parent;
 
     }
 
-
+    //creates a list of  program Items and put them in the list 
     public void CreateListProgram(Transform prefab, Transform parent, List<Program> list_program, string language, SimpleObjectPool simple_object_pool)
     {
         for(int i = 0; i < list_program.Count; i++)
@@ -38,7 +50,7 @@ public class ProgramService  {
     }
 
 
-    
+    //alter a program component based on the values from a Program object
     private void AlterProgramComponent(GameObject temp_object, Program program)
     {
         temp_object.GetComponent<Program>().ProgramId = program.ProgramId;
@@ -51,27 +63,36 @@ public class ProgramService  {
     }
     
 
+    //populate the program item in the list with proper values
     private void AlterProgramGameObject(GameObject temp_object, Program program, string language)
     {
+        //Change the title of program item
         temp_object.transform.GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);
 
+        //Change the mediaType (radio or tv) of the program item
         temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().TypeMedia = program.ProgramTypeMedia;
-        temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().flag = true;
+        temp_object.transform.GetChild(2).GetComponent<TypeMediaIconLoader>().flag = true; // gives indication value changed
 
+
+        //
         if (program.ProgramImageId != "not available")
         {
+            //build the image url based on the ImageId and change the ImageURL and ImageId
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = imageurlbuilder.GetImageUrl(imageurlbuilder.ConstructTransformation(InitImageAttributes()), program.ProgramImageId, "png");
-            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;// gives indication value changed
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageId = program.ProgramImageId;
         }
         else
         {
+            //if Image not Available, empty the ImageURL and put "not available" in ImageId
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageUrl = "";
-            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;
+            temp_object.transform.GetChild(1).GetComponent<ImageLoader>().flag = true;// gives indication value changed
             temp_object.transform.GetChild(1).GetComponent<ImageLoader>().ImageId = "not available";
         }
     }
 
+
+    //init properties of the retrieved image
     private List<string> InitImageAttributes()
     {
         List<string> list_image_attributes = new List<string>();
@@ -84,7 +105,7 @@ public class ProgramService  {
     }
 
 
-
+    //Desactive all objects in the list and put them in the object_pool
     public void RemoveAllPrograms(Transform parent, SimpleObjectPool simple_object_pool)
     {
         int temp = parent.childCount;
@@ -97,6 +118,7 @@ public class ProgramService  {
 
     }
 
+    //Set program details in the second screen
     public void SetDetailProgramScreen(GameObject header, Program program, string language)
     {
         header.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = titleservice.GetTitleByLangue(program, language);

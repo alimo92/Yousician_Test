@@ -10,6 +10,15 @@ public class Tools  {
 
     }
 
+    //Removes the first and last character from a text
+    /*
+     * Notes: I don't know if it's normal or it is just me who is missing something
+     * The free JSONObject library I am using has an issue when retrieving string values from a JSONObject
+     * I need to remove the " character at the begining and the end of the returned value
+     * 
+     * Example
+     * Without this function the result would : "yle" when it's supposed to be simply yle 
+     */
     public string RemoveFirstLastCharacter(string text)
     {
         text = text.Remove(0, 1);
@@ -19,6 +28,7 @@ public class Tools  {
     }
 
 
+    //returns a texture based on a filePath from the project
     public Texture2D LoadImage(string filePath)
     {
 

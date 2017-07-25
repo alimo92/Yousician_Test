@@ -45,11 +45,13 @@ public class ProgramJob : ThreadedJob
     // This is executed by the Unity main thread when the job is finished
     protected override void OnFinished()
     {
+        //Create a list of programs and put them in the scrolling list
         programservice.CreateListProgram(prefab_program, parent_program, list_program, ProgramLanguage, simple_object_pool);
 
     }
 
 
+    //get JSONArray from the field called "data"
     private JSONObject GetData(JSONObject JsonResponse)
     {
         return JsonResponse.GetField("data");
@@ -58,7 +60,10 @@ public class ProgramJob : ThreadedJob
 
     private void Initialization()
     {
+        //Turn string result into JSONObject
         JSONObject JsonResponse = new JSONObject(ProgramResponse);
+        
+        //Serialize the returned data into Program objects
         list_program = programparser.GetListObject(GetData(JsonResponse));
     }
 }

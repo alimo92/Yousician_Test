@@ -39,6 +39,8 @@ public class PublicationEventParser  {
         string temp_date;
         PublicationEvent publicationevent = new PublicationEvent();
 
+
+        //depending on the publication events, the duration can be a part of parent jsonobject or part of a child jsonobject called "media"
         if (json.HasField("duration"))
         {
             publicationevent.PublicationEventDuration = tool.RemoveFirstLastCharacter(json.GetField("duration").Print());
@@ -58,6 +60,7 @@ public class PublicationEventParser  {
         temp_date = tool.RemoveFirstLastCharacter(json.GetField("startTime").Print());
         publicationevent.PublicationEventStartDate = Convert.ToDateTime(temp_date);
 
+        //not all publication events have an endTime field
         if (json.HasField("endTime"))
         {
             temp_date = tool.RemoveFirstLastCharacter(json.GetField("endTime").Print());

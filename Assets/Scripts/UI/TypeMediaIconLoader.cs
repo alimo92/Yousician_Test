@@ -21,6 +21,7 @@ public class TypeMediaIconLoader : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //if TypeMedia value has changed then load the correct icon depending on which typemedia it is
         if (flag)
         {
 

@@ -27,6 +27,7 @@ public class BackButton : MonoBehaviour {
 
     private void GoBack()
     {
+        //Desactivate the second screen to go back to the first one
         panelmanager.state = false;
     }
 }
