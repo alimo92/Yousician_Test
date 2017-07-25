@@ -81,21 +81,19 @@ public class NetworkingProgram : MonoBehaviour {
     // Use this for initialization
     void Start () {
         initComponent();
-        //StartCoroutine(WaitForResponse());
     }
 	
 	// Update is called once per frame
 	void Update () {
 
         
+        //update the url and send request to retrieve data
         if (SendindRequestAllowed && extendlist.end_reached )
         {
             SendindRequestAllowed = false;
 
             int temp = count * step;
 
-            //URL = urlmanager.URL;
-            //URL = urlbuilder.GetNewListUrl(temp + "", step + "");
             urlbuilder.AlterUrlItemFromList(list_url_item, "offset", temp + "");
             URL = urlbuilder.GetUrl(list_url_item);
             big_loading_circle.SetActive(true);
@@ -103,6 +101,7 @@ public class NetworkingProgram : MonoBehaviour {
         }
         
 
+        //When programjob finishes the task
         if (programjob != null)
         {
             if (programjob.Update())
@@ -114,6 +113,7 @@ public class NetworkingProgram : MonoBehaviour {
             }
         }
 
+        //triggers changes only after 1s is passed without typing in the research bar
         if (SearchKeywordChanged)
         {
             if (timer(1))
@@ -177,11 +177,8 @@ public class NetworkingProgram : MonoBehaviour {
 
         if (Request.error == null)
         {
-
-            programjob = new ProgramJob(Request.text, prefab_program, prefab_content,Language, object_pool);
-
-            programjob.Start();
-            
+            programjob = new ProgramJob(Request.text, prefab_program, prefab_content,Language, object_pool); // initialize the thread parameters
+            programjob.Start(); 
         }
         else
         {
@@ -190,15 +187,16 @@ public class NetworkingProgram : MonoBehaviour {
     }
 
 
+    //initialize the basic parameters for the url
     private List<UrlItem> InitListURLItem(UrlBuilder urlbuilder)
     {
         List<UrlItem> list = urlbuilder.GetListUrlItem();
 
-        urlbuilder.AlterUrlItemFromList(list, "order", "publication.starttime:desc");
-        urlbuilder.AlterUrlItemFromList(list, "limit", step+"");
+        urlbuilder.AlterUrlItemFromList(list, "order", "publication.starttime:desc"); // showing the programs based on starting time made more sense than showing programs dating from 2014
+        urlbuilder.AlterUrlItemFromList(list, "limit", step+""); //how many items to bring when the end of the scrolling list is reached
         if (SafeCheckLanguage(Language))
         {
-            urlbuilder.AlterUrlItemFromList(list, "language", Language);
+            urlbuilder.AlterUrlItemFromList(list, "language", Language); //if language is specified
         }
 
 
@@ -206,14 +204,18 @@ public class NetworkingProgram : MonoBehaviour {
     } 
 
 
+    //triggered after typing on 
     private void InputListener(string value)
     {
-
-        SearchKeywordChanged = true; 
-
+        /*
+         * this is better than launching a request everytime a user enters a character
+         * waiting for at least 1s after he stops typing is necessary before sending a request
+         */
+        SearchKeywordChanged = true; //a change has been made in the research bar
     }
 
 
+    //Specifies which mediatype is selected (radio, tv or both)
     private void ToggleListener(bool value)
     {
         count = 0;
@@ -222,6 +224,7 @@ public class NetworkingProgram : MonoBehaviour {
         programservice.RemoveAllPrograms(prefab_content, object_pool.GetComponent<SimpleObjectPool>());
     }
 
+    //Specifies wich language is selected (finnish or swedish)
     private void LanguageToggleListener(bool value)
     {
         if (language_state != value)
@@ -242,7 +245,7 @@ public class NetworkingProgram : MonoBehaviour {
 
     }
 
-
+    //MediaType is a string variable depending on the state of the MediaTypeToggles
     private void HandleMediaTypeValue()
     {
 
@@ -261,9 +264,10 @@ public class NetworkingProgram : MonoBehaviour {
     }
 
 
-
+    //Updates the URL based on the inputs from the UI
     private void UpdateListURLItem()
     {
+        //MediaType 
         switch (MediaTypeValue)
         {
             case "ALL":
@@ -278,6 +282,8 @@ public class NetworkingProgram : MonoBehaviour {
                 urlbuilder.AlterUrlItemFromList(list_url_item, "mediaobject", "audio");
                 break;
         }
+
+        //Research bar
         if (SearchKeyWord != "")
         {
             urlbuilder.AlterUrlItemFromList(list_url_item, "q", SearchKeyWord);
@@ -286,9 +292,13 @@ public class NetworkingProgram : MonoBehaviour {
         {
             urlbuilder.RemoveUrlItemFromList(list_url_item,"q");
         }
+
+        //Language 
         urlbuilder.AlterUrlItemFromList(list_url_item, "language", Language);
     }
 
+
+    //simple timer, period in seconds
     private float time = 0;
     private bool timer(float period)
     {
@@ -304,6 +314,7 @@ public class NetworkingProgram : MonoBehaviour {
         }
     }
 
+    //function for testing purposes, check if language is either finnish or swedish
     private bool SafeCheckLanguage(string language)
     {
         if(language=="fi" || language == "sv")

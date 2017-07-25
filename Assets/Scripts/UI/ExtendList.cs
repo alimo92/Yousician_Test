@@ -27,6 +27,7 @@ public class ExtendList : MonoBehaviour {
     }
 
     //Check if scrolling list has reached its end
+    //returns true if the end of the list is reached
     private bool HandleEnd_Reached(ScrollRect scrollrect, bool end_reached)
     {
         rect_position = scrollrect.normalizedPosition;

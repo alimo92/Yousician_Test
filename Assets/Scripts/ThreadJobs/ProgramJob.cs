@@ -14,6 +14,10 @@ public class ProgramJob : ThreadedJob
     private Transform prefab_program;
     private Transform parent_program;
 
+
+    //ObjectPool is a GameObject where non used Program item are stored
+    //Those program item are recycled when needed
+    //SimpleObjectPool script is responsable of the gameobject trafic between the scrolling list and the ObjectPool gameobject
     private SimpleObjectPool simple_object_pool;
 
 
@@ -36,7 +40,7 @@ public class ProgramJob : ThreadedJob
     }
 
 
-    //this is executed by in parrallel to the Unity main thread
+    //this is executed in parrallel to the Unity main thread
     protected override void ThreadFunction()
     {
         Initialization();

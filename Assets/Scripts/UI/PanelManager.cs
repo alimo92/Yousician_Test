@@ -16,6 +16,7 @@ public class PanelManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //switch between the first and second screens (panels) based on a bool value
         if (state && SecondScreen.activeSelf==false)
         {
             SecondScreen.SetActive(true);

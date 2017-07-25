@@ -64,7 +64,7 @@ public class UrlBuilder  {
     }
 
     //Replaces an UrlItem from a list of urlitems with a new value
-    //if urlitem not found, it's added with a the new value
+    //if urlitem not found, it's added with the new value
     public void AlterUrlItemFromList(List<UrlItem> list_url_item, string urlitemtype, string new_urlitemvalue)
     {
         bool found = false;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/*
+ * Notes : this class is from the official Unity tutrial for how to make a scrolling list
+ */
+
+
 // A very simple object pooling class
 public class SimpleObjectPool : MonoBehaviour
 {

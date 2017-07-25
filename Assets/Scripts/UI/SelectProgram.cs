@@ -19,11 +19,6 @@ public class SelectProgram : MonoBehaviour {
     void Start () {
         InitComponent();
 
-
-        
-        
-
-
     }
 	
 	// Update is called once per frame
@@ -55,12 +50,13 @@ public class SelectProgram : MonoBehaviour {
     private void Select()
     {
         program = GetComponent<Program>();
-        panelmanager.state = true;
-        AlterProgramComponent(SelectedProgramObject, program);
-        SelectedProgramObject.gameObject.SetActive(true);
+        panelmanager.state = true; //for switching to the second screen 
+        AlterProgramComponent(SelectedProgramObject, program); //store selected program data
+        //SelectedProgramObject.gameObject.SetActive(true);
     }
 
 
+    //Stores data from the selected program in a seperate gameobject
     private void AlterProgramComponent(GameObject SelectedProgramObject, Program program)
     {
         SelectedProgramObject.GetComponent<Program>().ProgramId = program.ProgramId;

@@ -15,7 +15,7 @@ public class ImageUrlBuilder {
 
 
     //Returns Image based on ImageId, transformation and format
-    //transformation alters the the original picture (size, shape ...) example : "w_200,h_200"
+    //transformation alters the original picture (size, shape ...) example : "w_200,h_200"
     //Supported formats are png, jpg and gif
     public string GetImageUrl(string imagetransformation, string imageid, string imageformat)
     {

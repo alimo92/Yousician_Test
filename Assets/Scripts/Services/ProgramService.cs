@@ -29,7 +29,7 @@ public class ProgramService  {
         // Alter Program component based on the new program object
         AlterProgramComponent(temp_object, program);
 
-        // change the fields like title and imageID in a button based on the language
+        // change fields like title and imageID based on the language
         AlterProgramGameObject(temp_object, program, language); 
 
         //gives a title to the gameobject

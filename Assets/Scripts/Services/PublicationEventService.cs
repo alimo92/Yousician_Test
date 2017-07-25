@@ -25,12 +25,12 @@ public class PublicationEventService {
         if (Type == "Next")
         {
             delta_time = GetNearestTimeSpan(list_delta_time);
-            return GetPublicationEventByTimeSpan(list_delta_time, delta_time, listpublicationevent);
+            return GetPublicationEventByTimeSpan(list_delta_time, delta_time, listpublicationevent); // Returns next publication events
         }
         else if (Type == "Previous")
         {
             delta_time = GetPreviousTimeSpan(list_delta_time);
-            return GetPublicationEventByTimeSpan(list_delta_time, delta_time, listpublicationevent);
+            return GetPublicationEventByTimeSpan(list_delta_time, delta_time, listpublicationevent); // Returns previous publication events
         }
 
         return null;
