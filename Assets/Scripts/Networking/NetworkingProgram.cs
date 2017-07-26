@@ -178,7 +178,7 @@ public class NetworkingProgram : MonoBehaviour {
         if (Request.error == null)
         {
             programjob = new ProgramJob(Request.text, prefab_program, prefab_content,Language, object_pool); // initialize the thread parameters
-            programjob.Start(); 
+            programjob.Start(); // start job
         }
         else
         {
